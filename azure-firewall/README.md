@@ -58,7 +58,7 @@ nas@Azure:~$ az vm open-port --port 3389 --resource-group AITECH-FW-RG --name Sr
 
 b - Création de la machine virtuelle du serveur de travail<br/><br/>
 
-b.1 - Création d'une carte réseau sans adresse public pour le serveur de travail.<br/><br/>
+b.1 - Création d'une carte réseau sans adresse public pour le serveur de travail.<br/>
 
 nas@Azure:~$ az network nic create \
      -g AITECH-FW-RG \
@@ -66,8 +66,8 @@ nas@Azure:~$ az network nic create \
     --vnet-name AITECH-FW-VN \
     --subnet Workload-SN \
     --public-ip-address "" \
-    --dns-servers 209.244.0.3 209.244.0.4
-b.2 - Création de la machine virtuelle du serveur de travail on attachant la carte réseau du point b.1<br/><br/>
+    --dns-servers 209.244.0.3 209.244.0.4<br/><br/>
+b.2 - Création de la machine virtuelle du serveur de travail on attachant la carte réseau du point b.1<br/>
 
 nas@Azure:~$ az vm create \
      --resource-group AITECH-FW-RG \
