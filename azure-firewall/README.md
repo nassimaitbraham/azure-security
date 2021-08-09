@@ -7,8 +7,8 @@ nas@Azure:~$ az group create --name AITECH-FW-RG --location eastus<br/>
 2 - Mise en place du réseau<br/>
 
 a - Création du réseau virtuel (VNET)<br/>
-nas@Azure:~$ az network vnet create \<br/>
+nas@Azure:~$ az network vnet create \
 --name AITECH-FW-VN \<br/>
---resource-group AITECH-FW-RG \<br/>
---location eastus \<br/>
+--resource-group AITECH-FW-RG \
+--location eastus \
 --address-prefix 10.0.0.0/16<br/>
