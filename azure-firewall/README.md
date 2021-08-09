@@ -66,7 +66,7 @@ nas@Azure:~$ az network nic create \
     --vnet-name AITECH-FW-VN \
     --subnet Workload-SN \
     --public-ip-address "" \
-    --dns-servers 209.244.0.3 209.244.0.4
+    --dns-servers 209.244.0.3 209.244.0.4<br/>
 b.2 - Création de la machine virtuelle du serveur de travail on attachant la carte réseau du point b.1
 
 nas@Azure:~$ az vm create \
