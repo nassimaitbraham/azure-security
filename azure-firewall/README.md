@@ -37,7 +37,7 @@ nas@Azure:~$ az network vnet subnet create \
    --vnet-name AITECH-FW-VN   \
    --address-prefix 10.0.3.0/24<br/><br/>
 
-<h2>Création des seveurs</h2>
+<h2>3 - Création des seveurs</h2>
 
 Quand vous y êtes invité, tapez un mot de passe pour la machine virtuelle.
 
@@ -75,7 +75,49 @@ nas@Azure:~$ az vm create \
      --location eastus \
      --image win2016datacenter \
      --nics Srv-Work-NIC \
-     --admin-username azureadmin
+     --admin-username azureadmin<br/><br/>
+     
+<h2>4 - Déployement le pare-feu</h2>
+
+a- création du firewall<br/>
+
+nas@Azure:~$ az network firewall create \
+    --name AITECH-FW01 \
+    --resource-group AITECH-FW-RG \
+    --location eastus<br/><br/>
+
+b - création d'une ip public<br/>
+
+nas@Azure:~$ az network public-ip create \
+    --name fw-public-ip \
+    --resource-group AITECH-FW-RG \
+    --location eastus \
+    --allocation-method static \
+    --sku standard<br/><br/>
+	
+c - attribution de l'ip pubic au firewall<br/>
+
+az network firewall ip-config create \
+    --firewall-name AITECH-FW01 \
+    --name FW-config \
+    --public-ip-address fw-public-ip \
+    --resource-group AITECH-FW-RG \
+    --vnet-name AITECH-FW-VN<br/><br/>
+	
+d- mise a jour du firewall<br/>
+
+az network firewall update \
+    --name Test-FW01 \
+    --resource-group Test-FW-RG 
+
+c - affichage de l'ip public du firewall<br/><br/>	
+
+az network public-ip show \
+    --name fw-pip \
+    --resource-group Test-FW-RG<br/>
+
+d - affichage de l'ip prive du firewall<br/>
+fwprivaddr="$(az network firewall ip-config list -g AITECH-FW-RG -f AITECG-FW01 --query "[?name=='FW-config'].privateIpAddress" --output tsv)"<br/><br/>
 
 
 
