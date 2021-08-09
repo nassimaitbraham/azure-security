@@ -2,40 +2,40 @@
 
 <h2>1 - Création d'un ressource group</h2>
 
-nas@Azure:~$ az group create --name AITECH-FW-RG --location eastus<br/>
+nas@Azure:~$ az group create --name AITECH-FW-RG --location eastus
 
 <h2>2 - Mise en place du réseau</h2>
 
-a - Création du réseau virtuel (VNET)<br/>
+a - Création du réseau virtuel (VNET)
 nas@Azure:~$ az network vnet create \
   --name AITECH-FW-VN \
   --resource-group AITECH-FW-RG \
   --location eastus \
-  --address-prefix 10.0.0.0/16<br/><br/>
+  --address-prefix 10.0.0.0/16
 
-b - Création subnet du firewall<br/><br/>
+b - Création subnet du firewall
 
 nas@Azure:~$ az network vnet subnet create \
    --name AzureFirewallSubnet \
    --resource-group AITECH-FW-RG \
    --vnet-name AITECH-FW-VN   \
-   --address-prefix 10.0.1.0/24<br/><br/>
+   --address-prefix 10.0.1.0/24
  
- c - Création du subnet pour le serveur de travail<br/>
+ c - Création du subnet pour le serveur de travail
  
  nas@Azure:~$ az network vnet subnet create \
    --name Workload-SN \
    --resource-group AITECH-FW-RG \
    --vnet-name AITECH-FW-VN   \
-   --address-prefix 10.0.2.0/24<br/><br/>
+   --address-prefix 10.0.2.0/24
  
- d - Création du subnet pour le serveyr de rebond<br/>
+ d - Création du subnet pour le serveyr de rebond
 
 nas@Azure:~$ az network vnet subnet create \
     --name Jump-SN \
    --resource-group AITECH-FW-RG \
    --vnet-name AITECH-FW-VN   \
-   --address-prefix 10.0.3.0/24<br/><br/>
+   --address-prefix 10.0.3.0/24
 
 <h2>3 - Création des seveurs</h2>
 
