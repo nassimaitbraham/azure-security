@@ -79,12 +79,12 @@ nas@Azure:~$ az vm create \
      
 <h2>4 - Déployement le pare-feu</h2>
 
-a- création du firewall<br/>
+a- création du firewall
 
 nas@Azure:~$ az network firewall create \
     --name AITECH-FW01 \
     --resource-group AITECH-FW-RG \
-    --location eastus<br/><br/>
+    --location eastus
 
 b - création d'une ip public<br/>
 
