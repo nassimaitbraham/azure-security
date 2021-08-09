@@ -119,7 +119,7 @@ nas@Azure:~$ az network public-ip show \
 d - affichage de l'ip prive du firewall<br/>
 nas@Azure:~$ fwprivaddr="$(az network firewall ip-config list -g AITECH-FW-RG -f AITECH-FW01 --query "[?name=='FW-config'].privateIpAddress" --output tsv)"<br/><br/>
 
-<h2> Créer un itinéraire par défaut </h2>
+<h2>5 - Créer un itinéraire par défaut </h2>
 
 a - Creation de la table de route<br/>
 
@@ -148,7 +148,7 @@ nas@Azure:~$ az network vnet subnet update \
    --address-prefixes 10.0.2.0/24 \
    --route-table Firewall-rt-table
 
-<h2>5 - Régle d'application dans le firewall</h2>
+<h2>6 - Régle d'application dans le firewall</h2>
 
 nas@Azure:~$ az network firewall application-rule create \
    --collection-name App-Coll01 \
@@ -161,7 +161,7 @@ nas@Azure:~$ az network firewall application-rule create \
    --priority 200 \
    --action Allow<br/><br/> 
  
-<h2>6 - Configuration d'une régle de réseau dans le firewall</h2>
+<h2>7 - Configuration d'une régle de réseau dans le firewall</h2>
 
 nas@Azure:~$ az network firewall network-rule create \
    --collection-name Net-Coll01 \
@@ -175,7 +175,7 @@ nas@Azure:~$ az network firewall network-rule create \
    --source-addresses 10.0.2.0/24 \
    --action Allow<br/>
    
-<h2>7 - Suppression du ressource group</h2>
+<h2>8 - Suppression du ressource group</h2>
 
 nas@Azure:~$ az group delete -n AITECH-FW-RG
 
