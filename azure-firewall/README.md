@@ -97,7 +97,7 @@ nas@Azure:~$ az network public-ip create \
 	
 c - attribution de l'ip pubic au firewall<br/>
 
-az network firewall ip-config create \
+nas@Azure:~$ az network firewall ip-config create \
     --firewall-name AITECH-FW01 \
     --name FW-config \
     --public-ip-address fw-public-ip \
@@ -106,18 +106,76 @@ az network firewall ip-config create \
 	
 d- mise a jour du firewall<br/>
 
-az network firewall update \
-    --name Test-FW01 \
-    --resource-group Test-FW-RG 
+nas@Azure:~$ az network firewall update \
+    --name AITECH-FW01 \
+    --resource-group AITECH-FW-RG 
 
 c - affichage de l'ip public du firewall<br/><br/>	
 
-az network public-ip show \
-    --name fw-pip \
-    --resource-group Test-FW-RG<br/>
+nas@Azure:~$ az network public-ip show \
+    --name fw-public-ip \
+    --resource-group AITECH-FW-RG<br/>
 
 d - affichage de l'ip prive du firewall<br/>
-fwprivaddr="$(az network firewall ip-config list -g AITECH-FW-RG -f AITECG-FW01 --query "[?name=='FW-config'].privateIpAddress" --output tsv)"<br/><br/>
+nas@Azure:~$ fwprivaddr="$(az network firewall ip-config list -g AITECH-FW-RG -f AITECH-FW01 --query "[?name=='FW-config'].privateIpAddress" --output tsv)"<br/><br/>
 
+<h2> Créer un itinéraire par défaut </h2>
 
+a - Creation de la table de route<br/>
+
+nas@Azure:~$ az network route-table create \
+    --name Firewall-rt-table \
+    --resource-group AITECH-FW-RG \
+    --location eastus \
+    --disable-bgp-route-propagation true<br/><br/>
+
+b - Création de la route (Router toute les addresse IP vers le firewall)<br/>
+
+nas@Azure:~$ az network route-table route create \
+  --resource-group AITECH-FW-RG \
+  --name DG-Route \
+  --route-table-name Firewall-rt-table \
+  --address-prefix 0.0.0.0/0 \
+  --next-hop-type VirtualAppliance \
+  --next-hop-ip-address $fwprivaddr<br/><br/>
+  
+c - Associez la table de routage au sous-réseau workload-SN<br/>
+
+nas@Azure:~$ az network vnet subnet update \
+   -n Workload-SN \
+   -g AITECH-FW-RG \
+   --vnet-name AITECH-FW-VN \
+   --address-prefixes 10.0.2.0/24 \
+   --route-table Firewall-rt-table
+
+<h2>5 - Régle d'application dans le firewall</h2>
+
+nas@Azure:~$ az network firewall application-rule create \
+   --collection-name App-Coll01 \
+   --firewall-name AITECH-FW01 \
+   --name Allow-Google \
+   --protocols Http=80 Https=443 \
+   --resource-group AITECH-FW-RG \
+   --target-fqdns www.google.com \
+   --source-addresses 10.0.2.0/24 \
+   --priority 200 \
+   --action Allow<br/><br/> 
+ 
+<h2>6 - Configuration d'une régle de réseau dans le firewall</h2>
+
+nas@Azure:~$ az network firewall network-rule create \
+   --collection-name Net-Coll01 \
+   --destination-addresses 209.244.0.3 209.244.0.4 \
+   --destination-ports 53 \
+   --firewall-name AITECH-FW01 \
+   --name Allow-DNS \
+   --protocols UDP \
+   --resource-group AITECH-FW-RG \
+   --priority 200 \
+   --source-addresses 10.0.2.0/24 \
+   --action Allow<br/>
+   
+<h2>7 - Suppression du ressource group</h2>
+
+nas@Azure:~$ az group delete -n AITECH-FW-RG
 
