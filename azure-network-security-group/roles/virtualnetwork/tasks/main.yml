@@ -1,0 +1,24 @@
+- name: Creat virtual network
+  azure_rm_virtualnetwork:
+    resource_group: myResourceGroup
+    name: myVnet
+    address_prefixes_cidr: "10.0.0.0/16"
+- name: Add subnet to a virtual network
+  azure_rm_subnet:
+    resource_group: myResourceGroup
+    name: myFrontSubNet
+    address_prefix_cidr: "10.0.1.0/24"
+    virtual_network: myVnet
+- name: Create a public IP address and assign it to resource group
+  azure_rm_publicipaddress:
+    resource_group: myResourceGroup
+    allocation_method: static
+    name: myPublicIP
+- name: Create virtual network interface card
+  azure_rm_networkinterface:
+    resource_group: myResourceGroup
+    name: myNIC01
+    virtual_network: myVnet
+    subnet: myFrontSubNet
+    public_ip_name: myPublicIP
+    security_group: myFrontEndNsg

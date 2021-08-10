@@ -1,0 +1,11 @@
+- name: Create security group to allow ssh to frontend subnet
+  azure_rm_securitygroup:
+    resource_group: myResourceGroup
+    name: myFrontEndNsg
+    rules:
+      - name: SSH
+        protocol: Tcp
+        destination_port_range: 22
+        access: Allow
+        priority: 1001
+        direction: Inbound

@@ -1,0 +1,13 @@
+- name: create virtual machine
+  azure_rm_virtualmachine:
+    resource_group: myResourceGroup
+    name: myFrontEndVM
+    vm_size: Standard_DS1_v2
+    admin_username: userAdmin
+    admin_password: mypassword01!
+    network_interfaces: myNIC01
+    image:
+      offer: CentOS
+      publisher: OpenLogic
+      sku: '7.5'
+      version: latest
