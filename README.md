@@ -1,7 +1,6 @@
 <h1>1 -  Déploiement d'un firewall azure</h1>
 
-a - Directory : azure-firewall
+a - Directory : azure-firewall<br/>
 b - infrastructure :
-
-![azure_firewall](https://user-images.githubusercontent.com/5339905/128844978-1198cf29-7228-4016-99aa-e3a9145d1c7e.jpg)
+![azure_firewall](https://user-images.githubusercontent.com/5339905/128845356-18709712-ae9d-4031-9f8b-ead3600fbb15.jpg)
 
